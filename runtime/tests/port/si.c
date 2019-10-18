@@ -938,7 +938,7 @@ int j9sysinfo_test_sysinfo_get_processor_description(J9PortLibrary* portLibrary)
 	J9ProcessorDesc desc;
 
 	rc = j9sysinfo_get_processor_description(&desc);
-
+	outputErrorMessage(PORTTEST_ERROR_ARGS, "TESTTEST12312312312312 %d  454545454545454\n", desc.processor);
 #if (defined(J9X86) || defined(J9HAMMER))
 	if (desc.processor < PROCESSOR_X86_UNKNOWN) {
 		outputErrorMessage(PORTTEST_ERROR_ARGS, "j9sysinfo_test_sysinfo_get_processor_description() processor detection failed.\n");
