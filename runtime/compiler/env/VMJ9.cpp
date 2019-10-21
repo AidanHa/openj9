@@ -1257,7 +1257,7 @@ void TR_J9VMBase::printVerboseLogHeader(TR::Options *cmdLineOptions)
    vendorId =  TR::Compiler->target.cpu.getX86ProcessorVendorId();
    getCompInfo(processorName, size);
    IDATA rc = 0;
-
+   PORT_ACCESS_FROM_PORT(_portLibrary);
 	J9ProcessorDesc desc;
 
 	rc = j9sysinfo_get_processor_description(&desc);
