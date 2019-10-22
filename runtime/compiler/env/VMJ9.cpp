@@ -1243,6 +1243,13 @@ TR_J9VMBase::getConstantPoolFromClass(TR_OpaqueClassBlock *clazz)
 
 void TR_J9VMBase::printVerboseLogHeader(TR::Options *cmdLineOptions)
    {
+   IDATA rc = 0;
+   PORT_ACCESS_FROM_PORT(_portLibrary);
+	J9ProcessorDesc desc;
+
+	rc = j9sysinfo_get_processor_description(&desc);
+   TR_VerboseLog::writeLine(TR_Vlog_INFO,"     Return value that I want: %d", desc.processor);
+
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"Version Information:");
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"     JIT Level  - %s", getJ9JITConfig()->jitLevelName);
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"     JVM Level  - %s", EsBuildVersionString);
@@ -1256,12 +1263,7 @@ void TR_J9VMBase::printVerboseLogHeader(TR::Options *cmdLineOptions)
 #if defined(TR_TARGET_X86)
    vendorId =  TR::Compiler->target.cpu.getX86ProcessorVendorId();
    getCompInfo(processorName, size);
-   IDATA rc = 0;
-   PORT_ACCESS_FROM_PORT(_portLibrary);
-	J9ProcessorDesc desc;
-
-	rc = j9sysinfo_get_processor_description(&desc);
-
+   
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"Processor Informations:");
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"     Platform Info:%s %d",processorName, desc.processor);
    TR_VerboseLog::writeLine(TR_Vlog_INFO,"     Vendor:%s",vendorId);
