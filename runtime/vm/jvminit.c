@@ -2411,6 +2411,9 @@ IDATA VMInitStages(J9JavaVM *vm, IDATA stage, void* reserved) {
 static UDATA checkArgsConsumed(J9JavaVM * vm, J9PortLibrary* portLibrary, J9VMInitArgs* j9vm_args) {
 	UDATA i = 0;
 	PORT_ACCESS_FROM_PORT(portLibrary);
+	J9ProcessorDesc desc;
+	rc = j9sysinfo_get_processor_description(&desc);
+   	printf("I work %d", desc.processor);
 	jboolean ignoreUnrecognized = j9vm_args->actualVMArgs->ignoreUnrecognized;
 	jboolean ignoreUnrecongizedTopLevelOption = JNI_FALSE;
 	jboolean ignoreUnrecongizedXXColonOptions = JNI_TRUE;
