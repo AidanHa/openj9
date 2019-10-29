@@ -1846,15 +1846,12 @@ uint32_t TR::getCCPreLoadedCodeSize()
       size += 4 + (linesToLdPrefetch + 1) / 2 * 4 + 1 + (l3SkipLines ? 2 : 0) + (linesToStPrefetch + 1) / 2 * 4;
       }
    size += 3;
-
-      //TR_ObjectAlloc/TR_ConstLenArrayAlloc/TR_VariableLenArrayAlloc/Hybrid arraylets
-      size += (2 + (11 + 11) + 2) + (16 + 14) + 4 + 9 + 4;
-      // If TLH prefetching is done
-      size += 2*5 + 2*5;
-   #if defined(DEBUG)
-      //TR_ObjectAlloc/TR_ConstLenArrayAlloc
-      size += 5 + 8;
-   #endif
+   // If TLH prefetching is done
+   size += 2*5 + 2*5;
+#if defined(DEBUG)
+   //TR_ObjectAlloc/TR_ConstLenArrayAlloc
+   size += 5 + 8;
+#endif
 
    //TR_writeBarrier/TR_writeBarrierAndCardMark/TR_cardMark
    size += 12;
@@ -2411,8 +2408,6 @@ static uint8_t* initializeCCPreLoadedObjectAlloc(uint8_t *buffer, void **CCPreLo
    TR_ASSERT(cg->getBinaryBufferCursor() - entryLabel->getCodeLocation() == helperSize * PPC_INSTRUCTION_LENGTH,
              "Per-codecache object allocation helper, unexpected size");
 
-   CCPreLoadedCodeTable[TR_ObjAlloc] = entryLabel->getCodeLocation();
-
    return cg->getBinaryBufferCursor() - PPC_INSTRUCTION_LENGTH;
    }
 
@@ -2709,9 +2704,6 @@ static uint8_t* initializeCCPreLoadedArrayAlloc(uint8_t *buffer, void **CCPreLoa
 
    TR_ASSERT(cg->getBinaryBufferCursor() - entryLabel->getCodeLocation() == helperSize * PPC_INSTRUCTION_LENGTH,
              "Per-codecache array allocation helpers, unexpected size");
-
-   CCPreLoadedCodeTable[TR_VariableLenArrayAlloc] = entryLabel->getCodeLocation();
-   CCPreLoadedCodeTable[TR_ConstLenArrayAlloc] = constLenArrayAllocLabel->getCodeLocation();
 
    return cg->getBinaryBufferCursor() - PPC_INSTRUCTION_LENGTH;
    }

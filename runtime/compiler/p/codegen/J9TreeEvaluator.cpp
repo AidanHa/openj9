@@ -7200,7 +7200,6 @@ TR::Register *J9::Power::TreeEvaluator::VMnewEvaluator(TR::Node *node, TR::CodeG
    bool isArrayAlloc = (opCode == TR::newarray || opCode == TR::anewarray);
    bool isConstantLenArrayAlloc = isArrayAlloc && node->getFirstChild()->getOpCode().isLoadConst();
    bool isConstantZeroLenArrayAlloc = isConstantLenArrayAlloc && (node->getFirstChild()->getInt() == 0);
-   bool canOutlineNew = false;
 
    TR_ASSERT(objectSize <= 0 || (objectSize & (TR::Compiler->om.sizeofReferenceAddress() - 1)) == 0, "object size causes an alignment problem");
    if (objectSize < 0 || (objectSize == 0 && !usingTLH))
